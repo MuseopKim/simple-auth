@@ -42,6 +42,7 @@ public class AccountService {
         if (loginAccount.isDifferentAccount(updateRequest.getId())) {
             throw new AccessDeniedException();
         }
+
         if (updateRequest.isInvalidConfirmPassword()) {
             throw new InvalidConfirmPasswordException();
         }
@@ -50,5 +51,22 @@ public class AccountService {
         account.updatePassword(updateRequest.getPassword());
 
         return AccountSummaryResponse.from(account);
+    }
+
+    @Transactional
+    public void deleteBy(HttpServletRequest httpRequest, String accountId) {
+        HttpSession session = httpRequest.getSession(false);
+
+        if (session == null) {
+            throw new LoginRequiredException();
+        }
+
+        LoginAccount loginAccount = (LoginAccount) session.getAttribute("loginAccount");
+
+        if (loginAccount.isDifferentAccount(accountId)) {
+            throw new AccessDeniedException();
+        }
+
+        accountRepository.deleteById(loginAccount.getId());
     }
 }

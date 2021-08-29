@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.util.MultiValueMap;
 
-import javax.servlet.http.Cookie;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -101,6 +99,32 @@ class AccountControllerTest {
 
         // then
         assertThat(updatedAccount.getPassword()).isEqualTo(updatePassword);
+    }
+
+    @DisplayName("OK - 로그인한 유효한 사용자가 계정 삭제를 요청할 경우 삭제 후 200 응답을 반환한다.")
+    @Test
+    void ok_deleteAccountTest() {
+        // given
+        Account testAccount = Account.builder()
+                                .id("UserID")
+                                .password("password")
+                                .build();
+        Account account = accountRepository.save(testAccount);
+        long beforeCount = accountRepository.count();
+
+        // when
+        List<String> cookies = createLoginSessionCookie(account);
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.put(HttpHeaders.COOKIE, cookies);
+
+        HttpEntity deleteRequestEntity = new HttpEntity(requestHeaders);
+        ResponseEntity<Void> deleteResponse = testRestTemplate.exchange("/api/accounts/" + account.getId(),
+                                                                        HttpMethod.DELETE, deleteRequestEntity, Void.class);
+
+        // then
+        assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(accountRepository.count()).isEqualTo(beforeCount - 1);
     }
 
     private List<String> createLoginSessionCookie(Account account) {

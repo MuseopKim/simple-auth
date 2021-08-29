@@ -30,4 +30,10 @@ public class AccountController {
                                                  @RequestBody @Valid UpdatePasswordRequest updateRequest) {
         return accountService.updateBy(httpRequest, updateRequest);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{accountId}")
+    public void deleteAccount(HttpServletRequest httpRequest, @PathVariable String accountId) {
+        accountService.deleteBy(httpRequest, accountId);
+    }
 }
