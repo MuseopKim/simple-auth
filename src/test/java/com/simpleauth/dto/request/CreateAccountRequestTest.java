@@ -1,8 +1,7 @@
 package com.simpleauth.dto.request;
 
-import com.simpleauth.error.ErrorCode;
+import com.simpleauth.error.response.ErrorCode;
 import com.simpleauth.error.exception.InvalidConfirmPasswordException;
-import com.simpleauth.error.exception.PasswordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

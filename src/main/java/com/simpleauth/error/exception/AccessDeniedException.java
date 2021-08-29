@@ -1,6 +1,6 @@
 package com.simpleauth.error.exception;
 
-import com.simpleauth.error.ErrorCode;
+import com.simpleauth.error.response.ErrorCode;
 import lombok.Getter;
 
 @Getter

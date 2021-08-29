@@ -1,4 +1,4 @@
-package com.simpleauth.error;
+package com.simpleauth.error.response;
 
 import lombok.Getter;
 import org.springframework.validation.BindingResult;

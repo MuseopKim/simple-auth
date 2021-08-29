@@ -3,6 +3,8 @@ package com.simpleauth.error;
 import com.simpleauth.error.exception.AuthException;
 import com.simpleauth.error.exception.EntityNotFoundException;
 import com.simpleauth.error.exception.PasswordException;
+import com.simpleauth.error.response.ErrorCode;
+import com.simpleauth.error.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

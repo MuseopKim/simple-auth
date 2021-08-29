@@ -4,7 +4,7 @@ import com.simpleauth.dto.request.CreateAccountRequest;
 import com.simpleauth.dto.request.CreateAccountRequestBuilder;
 import com.simpleauth.dto.response.AccountSummaryResponse;
 import com.simpleauth.entity.Account;
-import com.simpleauth.error.ErrorCode;
+import com.simpleauth.error.response.ErrorCode;
 import com.simpleauth.error.exception.AccountDuplicationException;
 import com.simpleauth.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
