@@ -7,6 +7,6 @@ import lombok.Getter;
 public class InvalidConfirmPasswordException extends PasswordException {
 
     public InvalidConfirmPasswordException() {
-        super(ErrorCode.INVALID_INPUT_ERROR);
+        super(ErrorCode.INVALID_CONFIRM_PASSWORD_ERROR);
     }
 }
