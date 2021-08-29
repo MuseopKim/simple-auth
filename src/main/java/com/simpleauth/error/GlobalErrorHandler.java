@@ -39,6 +39,6 @@ public class GlobalErrorHandler {
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error("handleMethodArgumentNotValidException", exception);
         ErrorCode errorCode = ErrorCode.INVALID_INPUT_ERROR;
-        return new ResponseEntity<>(ErrorResponse.from(errorCode), HttpStatus.valueOf(errorCode.getStatusCode()));
+        return new ResponseEntity<>(ErrorResponse.of(errorCode, exception.getBindingResult()), HttpStatus.valueOf(errorCode.getStatusCode()));
     }
 }
