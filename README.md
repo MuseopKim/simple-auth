@@ -59,7 +59,7 @@ INSERT INTO account (id, password) VALUES ('userId3', 'password3');
 
 <br />
 
-## 패키지 구성
+## 프로젝트 구조
 
 - controller
 - dto
@@ -68,6 +68,8 @@ INSERT INTO account (id, password) VALUES ('userId3', 'password3');
   - login
 - entity
 - error
+ - exception
+ - response
 - repository
 - service
 
@@ -210,7 +212,7 @@ NONE
 
 <br />
 
-### 5. 로그인한 사용자와 수정 / 삭제 계정이 일치하지 않는 경우
+### 5. 로그인한 사용자와 요청한 수정 / 삭제 계정이 일치하지 않는 경우
 
 ```
 {
