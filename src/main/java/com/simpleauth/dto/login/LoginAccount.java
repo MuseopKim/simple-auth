@@ -12,6 +12,10 @@ public class LoginAccount {
         this.id = id;
     }
 
+    public boolean isDifferentAccount(String id) {
+        return !this.id.equals(id);
+    }
+
     public static LoginAccount from(Account account) {
         return new LoginAccount(account.getId());
     }
