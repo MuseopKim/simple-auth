@@ -1,5 +1,8 @@
 package com.simpleauth.dto.request;
 
+import com.simpleauth.error.ErrorCode;
+import com.simpleauth.error.exception.InvalidConfirmPasswordException;
+import com.simpleauth.error.exception.PasswordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,7 @@ public class CreateAccountRequestTest {
     @Test
     void isInvalidPasswordTest() {
         // given
+        ErrorCode errorCode = ErrorCode.INVALID_CONFIRM_PASSWORD_ERROR;
         CreateAccountRequest request = CreateAccountRequestBuilder.newBuilder()
                                                             .id("UserID")
                                                             .password("password")
@@ -19,6 +23,7 @@ public class CreateAccountRequestTest {
 
         // then
         assertThatThrownBy(() -> request.toEntity())
-                .isInstanceOf(RuntimeException.class);
+                .isExactlyInstanceOf(InvalidConfirmPasswordException.class)
+                .hasMessage(errorCode.getMessage());
     }
 }
