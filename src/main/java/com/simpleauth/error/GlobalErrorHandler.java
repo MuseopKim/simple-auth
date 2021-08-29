@@ -1,5 +1,6 @@
 package com.simpleauth.error;
 
+import com.simpleauth.error.exception.AuthException;
 import com.simpleauth.error.exception.EntityNotFoundException;
 import com.simpleauth.error.exception.PasswordException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalErrorHandler {
+
+    @ExceptionHandler(AuthException.class)
+    protected ResponseEntity<ErrorResponse> handleAuthException(AuthException exception) {
+        log.error("handleAuthException", exception);
+        ErrorCode errorCode = exception.getErrorCode();
+        return new ResponseEntity<>(ErrorResponse.from(errorCode), HttpStatus.valueOf(errorCode.getStatusCode()));
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
