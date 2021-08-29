@@ -2,7 +2,7 @@ package com.simpleauth.controller;
 
 import com.simpleauth.dto.request.CreateAccountRequest;
 import com.simpleauth.dto.request.UpdatePasswordRequest;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,14 +20,14 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public AccountSummaryResponse createNew(@RequestBody @Valid CreateAccountRequest request) {
+    public AccountIdResponse createNew(@RequestBody @Valid CreateAccountRequest request) {
           return accountService.createBy(request);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public AccountSummaryResponse updatePassword(HttpServletRequest httpRequest,
-                                                 @RequestBody @Valid UpdatePasswordRequest updateRequest) {
+    public AccountIdResponse updatePassword(HttpServletRequest httpRequest,
+                                            @RequestBody @Valid UpdatePasswordRequest updateRequest) {
         return accountService.updateBy(httpRequest, updateRequest);
     }
 

@@ -3,7 +3,7 @@ package com.simpleauth.service;
 import com.simpleauth.dto.login.LoginAccount;
 import com.simpleauth.dto.request.CreateAccountRequest;
 import com.simpleauth.dto.request.UpdatePasswordRequest;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.error.exception.*;
 import com.simpleauth.repository.AccountRepository;
@@ -21,7 +21,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    public AccountSummaryResponse createBy(CreateAccountRequest request) {
+    public AccountIdResponse createBy(CreateAccountRequest request) {
         Optional<Account> accountOptional = accountRepository.findById(request.getId());
 
         if (accountOptional.isPresent()) {
@@ -30,11 +30,11 @@ public class AccountService {
 
         Account account = request.toEntity();
         Account newAccount = accountRepository.save(account);
-        return AccountSummaryResponse.from(newAccount);
+        return AccountIdResponse.from(newAccount);
     }
 
     @Transactional
-    public AccountSummaryResponse updateBy(HttpServletRequest httpRequest, UpdatePasswordRequest updateRequest) {
+    public AccountIdResponse updateBy(HttpServletRequest httpRequest, UpdatePasswordRequest updateRequest) {
         HttpSession session = httpRequest.getSession(false);
 
         if (session == null) {
@@ -54,7 +54,7 @@ public class AccountService {
         Account account = accountRepository.findById(loginAccount.getId()).orElseThrow(AccountNotFoundException::new);
         account.updatePassword(updateRequest.getPassword());
 
-        return AccountSummaryResponse.from(account);
+        return AccountIdResponse.from(account);
     }
 
     @Transactional

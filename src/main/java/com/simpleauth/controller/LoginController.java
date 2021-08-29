@@ -1,7 +1,7 @@
 package com.simpleauth.controller;
 
 import com.simpleauth.dto.request.LoginRequest;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping
-    public AccountSummaryResponse login(HttpServletRequest httpRequest, @RequestBody LoginRequest loginRequest) {
+    public AccountIdResponse login(HttpServletRequest httpRequest, @RequestBody LoginRequest loginRequest) {
         return loginService.loginBy(httpRequest, loginRequest);
     }
 }

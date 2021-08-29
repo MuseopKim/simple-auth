@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class AccountSummaryResponse {
+public class AccountIdResponse {
 
     private String id;
 
-    private AccountSummaryResponse(String id) {
+    private AccountIdResponse(String id) {
         this.id = id;
     }
 
-    public static AccountSummaryResponse from(Account account) {
-        return new AccountSummaryResponse(account.getId());
+    public static AccountIdResponse from(Account account) {
+        return new AccountIdResponse(account.getId());
     }
 }

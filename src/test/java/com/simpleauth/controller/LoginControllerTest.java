@@ -2,7 +2,7 @@ package com.simpleauth.controller;
 
 import com.simpleauth.dto.request.LoginRequest;
 import com.simpleauth.dto.request.LoginRequestBuilder;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class LoginControllerTest {
@@ -40,8 +39,8 @@ class LoginControllerTest {
                                                 .build();
 
         // when
-        ResponseEntity<AccountSummaryResponse> responseEntity = testRestTemplate.postForEntity("/api/login", loginRequest,
-                                                                                                AccountSummaryResponse.class);
+        ResponseEntity<AccountIdResponse> responseEntity = testRestTemplate.postForEntity("/api/login", loginRequest,
+                                                                                                AccountIdResponse.class);
         String sessionCookie = responseEntity.getHeaders().get("Set-Cookie").get(0);
 
 

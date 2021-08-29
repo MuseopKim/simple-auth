@@ -2,7 +2,7 @@ package com.simpleauth.service;
 
 import com.simpleauth.dto.request.CreateAccountRequest;
 import com.simpleauth.dto.request.CreateAccountRequestBuilder;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.error.response.ErrorCode;
 import com.simpleauth.error.exception.AccountDuplicationException;
@@ -46,7 +46,7 @@ class AccountServiceTest {
         // when
         given(accountRepository.save(refEq(request.toEntity()))).willReturn(newAccount);
 
-        AccountSummaryResponse response = accountService.createBy(request);
+        AccountIdResponse response = accountService.createBy(request);
 
         // then
         assertThat(response.getId()).isEqualTo(newAccount.getId());

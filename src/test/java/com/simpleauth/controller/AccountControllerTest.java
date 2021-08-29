@@ -1,7 +1,7 @@
 package com.simpleauth.controller;
 
 import com.simpleauth.dto.request.*;
-import com.simpleauth.dto.response.AccountSummaryResponse;
+import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.error.exception.AccountNotFoundException;
 import com.simpleauth.repository.AccountRepository;
@@ -40,8 +40,8 @@ class AccountControllerTest {
                                                                 .build();
 
         // when
-        ResponseEntity<AccountSummaryResponse> responseEntity = testRestTemplate.postForEntity("/api/accounts", request, AccountSummaryResponse.class);
-        AccountSummaryResponse response = responseEntity.getBody();
+        ResponseEntity<AccountIdResponse> responseEntity = testRestTemplate.postForEntity("/api/accounts", request, AccountIdResponse.class);
+        AccountIdResponse response = responseEntity.getBody();
         Account newAccount = accountRepository.findById(request.getId()).orElseThrow(RuntimeException::new);
 
         // then
@@ -62,7 +62,7 @@ class AccountControllerTest {
                                                             .build();
 
         // when
-        ResponseEntity<AccountSummaryResponse> responseEntity = testRestTemplate.postForEntity("/api/accounts", request, AccountSummaryResponse.class);
+        ResponseEntity<AccountIdResponse> responseEntity = testRestTemplate.postForEntity("/api/accounts", request, AccountIdResponse.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -92,8 +92,8 @@ class AccountControllerTest {
         requestHeaders.put(HttpHeaders.COOKIE, cookies);
 
         HttpEntity updateRequestEntity = new HttpEntity(updateRequest, requestHeaders);
-        ResponseEntity<AccountSummaryResponse> updateResponse = testRestTemplate.exchange("/api/accounts", HttpMethod.PUT, updateRequestEntity, AccountSummaryResponse.class);
-        AccountSummaryResponse response = updateResponse.getBody();
+        ResponseEntity<AccountIdResponse> updateResponse = testRestTemplate.exchange("/api/accounts", HttpMethod.PUT, updateRequestEntity, AccountIdResponse.class);
+        AccountIdResponse response = updateResponse.getBody();
 
         Account updatedAccount = accountRepository.findById(response.getId()).orElseThrow(AccountNotFoundException::new);
 
@@ -132,7 +132,7 @@ class AccountControllerTest {
                                                 .id(account.getId())
                                                 .password(account.getPassword())
                                                 .build();
-        ResponseEntity<AccountSummaryResponse> loginResponse = testRestTemplate.postForEntity("/api/login", loginRequest, AccountSummaryResponse.class);
+        ResponseEntity<AccountIdResponse> loginResponse = testRestTemplate.postForEntity("/api/login", loginRequest, AccountIdResponse.class);
 
         return loginResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
     }
