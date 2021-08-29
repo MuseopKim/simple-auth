@@ -1,6 +1,7 @@
 package com.simpleauth.repository;
 
 import com.simpleauth.entity.Account;
+import com.simpleauth.error.exception.AccountNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ class AccountRepositoryTest {
         Account account = accountRepository.save(testAccount);
 
         // when
-        Account foundAccount = accountRepository.findBy(account.getId(), account.getPassword()).orElseThrow(RuntimeException::new);
+        Account foundAccount = accountRepository.findBy(account.getId(), account.getPassword()).orElseThrow(AccountNotFoundException::new);
 
         // then
         assertThat(account).usingRecursiveComparison().isEqualTo(foundAccount);
