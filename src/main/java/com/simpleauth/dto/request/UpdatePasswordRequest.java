@@ -1,11 +1,9 @@
 package com.simpleauth.dto.request;
 
-import com.simpleauth.dto.response.AccountSummaryResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,5 +21,9 @@ public class UpdatePasswordRequest {
         this.id = id;
         this.password = password;
         this.confirmPassword = confirmPassword;
+    }
+
+    public boolean isInvalidConfirmPassword() {
+        return !password.equals(confirmPassword);
     }
 }
