@@ -1,9 +1,9 @@
 package com.simpleauth.controller;
 
-import com.simpleauth.dto.request.CreateAccountRequest;
-import com.simpleauth.dto.request.CreateAccountRequestBuilder;
+import com.simpleauth.dto.request.*;
 import com.simpleauth.dto.response.AccountSummaryResponse;
 import com.simpleauth.entity.Account;
+import com.simpleauth.error.exception.AccountNotFoundException;
 import com.simpleauth.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.MultiValueMap;
 
+import javax.servlet.http.Cookie;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,6 +68,49 @@ class AccountControllerTest {
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @DisplayName("OK - 로그인한 유효한 사용자가 Password 변경을 요청하면 200 응답을 반환한다.")
+    @Test
+    void ok_updatePasswordTest() {
+        // given
+        Account testAccount = Account.builder()
+                                .id("UserID")
+                                .password("password")
+                                .build();
+        Account account = accountRepository.save(testAccount);
+
+        String updatePassword = "UpdatePassword";
+        UpdatePasswordRequest updateRequest = UpdatePasswordRequestBuilder.newBuilder()
+                                                                .id(account.getId())
+                                                                .password(updatePassword)
+                                                                .confirmPassword(updatePassword)
+                                                                .build();
+
+        // when
+        List<String> cookies = createLoginSessionCookie(account);
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.put(HttpHeaders.COOKIE, cookies);
+
+        HttpEntity updateRequestEntity = new HttpEntity(updateRequest, requestHeaders);
+        ResponseEntity<AccountSummaryResponse> updateResponse = testRestTemplate.exchange("/api/accounts", HttpMethod.PUT, updateRequestEntity, AccountSummaryResponse.class);
+        AccountSummaryResponse response = updateResponse.getBody();
+
+        Account updatedAccount = accountRepository.findById(response.getId()).orElseThrow(AccountNotFoundException::new);
+
+        // then
+        assertThat(updatedAccount.getPassword()).isEqualTo(updatePassword);
+    }
+
+    private List<String> createLoginSessionCookie(Account account) {
+        LoginRequest loginRequest = LoginRequestBuilder.newBuilder()
+                                                .id(account.getId())
+                                                .password(account.getPassword())
+                                                .build();
+        ResponseEntity<AccountSummaryResponse> loginResponse = testRestTemplate.postForEntity("/api/login", loginRequest, AccountSummaryResponse.class);
+
+        return loginResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
     }
 
     private static Stream<Arguments> invalidCreateAccountParams() {

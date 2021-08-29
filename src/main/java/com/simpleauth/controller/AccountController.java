@@ -1,12 +1,14 @@
 package com.simpleauth.controller;
 
 import com.simpleauth.dto.request.CreateAccountRequest;
+import com.simpleauth.dto.request.UpdatePasswordRequest;
 import com.simpleauth.dto.response.AccountSummaryResponse;
 import com.simpleauth.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ public class AccountController {
           return accountService.createBy(request);
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @PutMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping
+    public AccountSummaryResponse updatePassword(HttpServletRequest httpRequest,
+                                                 @RequestBody @Valid UpdatePasswordRequest updateRequest) {
+        return accountService.updateBy(httpRequest, updateRequest);
+    }
 }

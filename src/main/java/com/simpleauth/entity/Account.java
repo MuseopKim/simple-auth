@@ -26,4 +26,8 @@ public class Account {
         this.id = id;
         this.password = password;
     }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 }
