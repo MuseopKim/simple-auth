@@ -1,6 +1,7 @@
 package com.simpleauth.dto.request;
 
 import com.simpleauth.entity.Account;
+import com.simpleauth.error.exception.InvalidConfirmPasswordException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,8 @@ public class CreateAccountRequest {
     }
 
     public Account toEntity() {
-        if (isInvalidPassword()) {
-            // TODO : 구체적인 예외로 리팩토링
-            throw new RuntimeException("비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+        if (isInvalidConfirmPassword()) {
+            throw new InvalidConfirmPasswordException();
         }
 
         return Account.builder()
@@ -39,7 +39,7 @@ public class CreateAccountRequest {
                 .build();
     }
 
-    private boolean isInvalidPassword() {
+    private boolean isInvalidConfirmPassword() {
         return !this.password.equals(this.confirmPassword);
     }
 }
