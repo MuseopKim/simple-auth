@@ -16,7 +16,8 @@ public enum ErrorCode {
     INVALID_CONFIRM_PASSWORD_ERROR(400, "비밀번호와 확인 비밀번호가 일치하지 않습니다."),
 
     // Entity
-    ACCOUNT_NOT_FOUND_ERROR(404, "아이디와 비밀번호가 일치하는 계정을 찾을 수 없습니다. 다시 확인 후 요청 해주세요.")
+    ACCOUNT_NOT_FOUND_ERROR(404, "아이디와 비밀번호가 일치하는 계정을 찾을 수 없습니다. 다시 확인 후 요청 해주세요."),
+    ACCOUNT_DUPLICATION_ERROR(409, "요청한 아이디의 계정이 이미 존재합니다. 다른 아이디로 다시 요청 해주세요.")
     ;
 
     private int statusCode;

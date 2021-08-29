@@ -5,10 +5,7 @@ import com.simpleauth.dto.request.CreateAccountRequest;
 import com.simpleauth.dto.request.UpdatePasswordRequest;
 import com.simpleauth.dto.response.AccountSummaryResponse;
 import com.simpleauth.entity.Account;
-import com.simpleauth.error.exception.AccessDeniedException;
-import com.simpleauth.error.exception.AccountNotFoundException;
-import com.simpleauth.error.exception.InvalidConfirmPasswordException;
-import com.simpleauth.error.exception.LoginRequiredException;
+import com.simpleauth.error.exception.*;
 import com.simpleauth.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +22,12 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     public AccountSummaryResponse createBy(CreateAccountRequest request) {
+        Optional<Account> accountOptional = accountRepository.findById(request.getId());
+
+        if (accountOptional.isPresent()) {
+            throw new AccountDuplicationException();
+        }
+
         Account account = request.toEntity();
         Account newAccount = accountRepository.save(account);
         return AccountSummaryResponse.from(newAccount);
