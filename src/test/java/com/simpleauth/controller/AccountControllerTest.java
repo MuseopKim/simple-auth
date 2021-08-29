@@ -5,7 +5,6 @@ import com.simpleauth.dto.request.CreateAccountRequestBuilder;
 import com.simpleauth.dto.response.AccountSummaryResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.repository.AccountRepository;
-import com.simpleauth.service.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AccountControllerTest {
