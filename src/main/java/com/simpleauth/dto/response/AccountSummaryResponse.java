@@ -2,11 +2,13 @@ package com.simpleauth.dto.response;
 
 import com.simpleauth.entity.Account;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class AccountSummaryResponse {
 
-    private final String id;
+    private String id;
 
     private AccountSummaryResponse(String id) {
         this.id = id;
