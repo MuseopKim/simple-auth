@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 public class CreateAccountRequest {
 
-    @Pattern(regexp = "^[a-zA-Z0-9]", message = "ID는 공백 없이 영문 숫자만 허용합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "ID는 공백 없이 영문 숫자만 허용합니다.")
     @Size(min = 3, max = 20, message = "ID 값은 3자 이상 20자 이하입니다.")
     private String id;
 
