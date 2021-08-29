@@ -1,6 +1,6 @@
 package com.simpleauth.error;
 
-import com.simpleauth.error.exception.InvalidConfirmPasswordException;
+import com.simpleauth.error.exception.EntityNotFoundException;
 import com.simpleauth.error.exception.PasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalErrorHandler {
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
+        ErrorCode errorCode = exception.getErrorCode();
+        return new ResponseEntity<>(ErrorResponse.from(errorCode), HttpStatus.valueOf(errorCode.getMessage()));
+    }
 
     @ExceptionHandler(PasswordException.class)
     protected ResponseEntity<ErrorResponse> handleInvalidConfirmPasswordException(PasswordException exception) {
