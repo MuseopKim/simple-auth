@@ -12,7 +12,7 @@ public class UpdatePasswordRequest {
 
     private String id;
 
-    @Size(min = 5, max = 30, message = "Password 값은 6자 이상 30자 이하입니다.")
+    @Size(min = 6, max = 30, message = "Password 값은 6자 이상 30자 이하입니다.")
     private String password;
 
     private String confirmPassword;
