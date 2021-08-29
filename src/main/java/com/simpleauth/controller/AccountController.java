@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/accounts")
@@ -16,7 +18,7 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public AccountSummaryResponse createNew(@RequestBody  CreateAccountRequest request) {
+    public AccountSummaryResponse createNew(@RequestBody @Valid CreateAccountRequest request) {
           return accountService.createBy(request);
     }
 }
