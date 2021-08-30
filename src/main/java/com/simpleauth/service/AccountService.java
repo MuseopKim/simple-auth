@@ -7,12 +7,12 @@ import com.simpleauth.dto.response.AccountIdResponse;
 import com.simpleauth.entity.Account;
 import com.simpleauth.error.exception.*;
 import com.simpleauth.repository.AccountRepository;
+import com.simpleauth.session.HttpSessionManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +20,7 @@ import java.util.Optional;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final HttpSessionManager httpSessionManager;
 
     public AccountIdResponse createBy(CreateAccountRequest request) {
         Optional<Account> accountOptional = accountRepository.findById(request.getId());
@@ -35,13 +36,11 @@ public class AccountService {
 
     @Transactional
     public AccountIdResponse updateBy(HttpServletRequest httpRequest, UpdatePasswordRequest updateRequest) {
-        HttpSession session = httpRequest.getSession(false);
-
-        if (session == null) {
+        if (httpSessionManager.isLogin(httpRequest)) {
             throw new LoginRequiredException();
         }
 
-        LoginAccount loginAccount = (LoginAccount) session.getAttribute("loginAccount");
+        LoginAccount loginAccount = httpSessionManager.getLoginAccount(httpRequest);
 
         if (loginAccount.isDifferentAccount(updateRequest.getId())) {
             throw new AccessDeniedException();
@@ -59,13 +58,11 @@ public class AccountService {
 
     @Transactional
     public void deleteBy(HttpServletRequest httpRequest, String accountId) {
-        HttpSession session = httpRequest.getSession(false);
-
-        if (session == null) {
+        if (httpSessionManager.isLogin(httpRequest)) {
             throw new LoginRequiredException();
         }
 
-        LoginAccount loginAccount = (LoginAccount) session.getAttribute("loginAccount");
+        LoginAccount loginAccount = httpSessionManager.getLoginAccount(httpRequest);
 
         if (loginAccount.isDifferentAccount(accountId)) {
             throw new AccessDeniedException();
