@@ -1,5 +1,6 @@
 package com.simpleauth.dto.request;
 
+import com.simpleauth.constants.Validation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ public class UpdatePasswordRequest {
 
     private String id;
 
-    @Size(min = 6, max = 30, message = "Password 값은 6자 이상 30자 이하입니다.")
+    @Size(min = Validation.PASSWORD_SIZE_MIN, max = Validation.PASSWORD_SIZE_MAX, message = Validation.PASSWORD_SIZE_MESSAGE)
     private String password;
 
     private String confirmPassword;

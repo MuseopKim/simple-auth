@@ -1,5 +1,6 @@
 package com.simpleauth.dto.request;
 
+import com.simpleauth.constants.Validation;
 import com.simpleauth.entity.Account;
 import com.simpleauth.error.exception.InvalidConfirmPasswordException;
 import lombok.AccessLevel;
@@ -13,11 +14,11 @@ import javax.validation.constraints.Size;
 @Getter
 public class CreateAccountRequest {
 
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "ID는 공백 없이 영문 숫자만 허용합니다.")
-    @Size(min = 3, max = 20, message = "ID 값은 3자 이상 20자 이하입니다.")
+    @Pattern(regexp = Validation.ID_PATTERN_REGEX, message = Validation.ID_PATTERN_MESSAGE)
+    @Size(min = Validation.ID_SIZE_MIN, max = Validation.ID_SIZE_MAX, message = Validation.ID_SIZE_MESSAGE)
     private String id;
 
-    @Size(min = 6, max = 30, message = "Password 값은 6자 이상 30자 이하입니다.")
+    @Size(min = Validation.PASSWORD_SIZE_MIN, max = Validation.PASSWORD_SIZE_MAX, message = Validation.PASSWORD_SIZE_MESSAGE)
     private String password;
 
     private String confirmPassword;
