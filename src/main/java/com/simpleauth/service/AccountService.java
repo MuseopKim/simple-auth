@@ -36,7 +36,7 @@ public class AccountService {
 
     @Transactional
     public AccountIdResponse updateBy(HttpServletRequest httpRequest, UpdatePasswordRequest updateRequest) {
-        if (httpSessionManager.isLogin(httpRequest)) {
+        if (httpSessionManager.isNotLogin(httpRequest)) {
             throw new LoginRequiredException();
         }
 
@@ -58,7 +58,7 @@ public class AccountService {
 
     @Transactional
     public void deleteBy(HttpServletRequest httpRequest, String accountId) {
-        if (httpSessionManager.isLogin(httpRequest)) {
+        if (httpSessionManager.isNotLogin(httpRequest)) {
             throw new LoginRequiredException();
         }
 

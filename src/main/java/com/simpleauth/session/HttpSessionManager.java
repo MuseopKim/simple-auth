@@ -20,7 +20,7 @@ public class HttpSessionManager {
         session.setAttribute(LOGIN_ACCOUNT, LoginAccount.from(account));
     }
 
-    public boolean isLogin(HttpServletRequest request) {
+    public boolean isNotLogin(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         return session == null;
     }
