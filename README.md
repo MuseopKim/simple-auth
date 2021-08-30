@@ -62,6 +62,7 @@ INSERT INTO account (id, password) VALUES ('userId3', 'password3');
 ## 프로젝트 구조
 
 - controller
+- constants
 - dto
   - request
   - response
@@ -72,6 +73,7 @@ INSERT INTO account (id, password) VALUES ('userId3', 'password3');
   - response
 - repository
 - service
+- sesseion
 
 <br />
 
@@ -169,6 +171,10 @@ NONE
         {
             "value": "password",
             "reaseon": "Password 값은 6자 이상 30자 이하입니다."
+        },
+        {
+            "value": "id",
+            "reaseon": "ID는 공백 없이 영문 숫자만 허용합니다."
         }
     ]
 }
