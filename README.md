@@ -1,7 +1,7 @@
 ## Simple Auth Application
 
 - 간단한 회원 가입, 수정, 삭제 및 세션 기반의 폼 인증을 구현합니다.
-- 회원 테이블은 오직 id, password 컬럼만을 가지며, id는 20자(공백 없는 영문 또는 숫자), password는 30자의 제약조건을 가집니다.
+- 회원 테이블은 오직 id, password 컬럼만을 가지며, id는 3자 이상 20자이하(공백 없는 영문 또는 숫자), password는 6자 이상 30자 이하의 제약조건을 가집니다.
 - password 인코딩은 생략합니다.
 
 <br />
@@ -68,8 +68,8 @@ INSERT INTO account (id, password) VALUES ('userId3', 'password3');
   - login
 - entity
 - error
- - exception
- - response
+  - exception
+  - response
 - repository
 - service
 
