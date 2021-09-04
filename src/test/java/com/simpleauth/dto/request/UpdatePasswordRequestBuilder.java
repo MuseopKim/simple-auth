@@ -7,14 +7,8 @@ public class UpdatePasswordRequestBuilder {
     }
 
     public static class Builder {
-        private String id;
         private String password;
         private String confirmPassword;
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder password(String password) {
             this.password = password;
@@ -27,7 +21,7 @@ public class UpdatePasswordRequestBuilder {
         }
 
         public UpdatePasswordRequest build() {
-            return new UpdatePasswordRequest(id, password, confirmPassword);
+            return new UpdatePasswordRequest(password, confirmPassword);
         }
     }
 }

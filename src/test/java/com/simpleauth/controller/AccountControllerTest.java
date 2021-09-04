@@ -80,7 +80,6 @@ class AccountControllerTest {
 
         String updatePassword = "UpdatePassword";
         UpdatePasswordRequest updateRequest = UpdatePasswordRequestBuilder.newBuilder()
-                                                                .id(account.getId())
                                                                 .password(updatePassword)
                                                                 .confirmPassword(updatePassword)
                                                                 .build();
@@ -92,7 +91,8 @@ class AccountControllerTest {
         requestHeaders.put(HttpHeaders.COOKIE, cookies);
 
         HttpEntity updateRequestEntity = new HttpEntity(updateRequest, requestHeaders);
-        ResponseEntity<AccountIdResponse> updateResponse = testRestTemplate.exchange("/api/accounts", HttpMethod.PUT, updateRequestEntity, AccountIdResponse.class);
+        ResponseEntity<AccountIdResponse> updateResponse = testRestTemplate.exchange("/api/accounts/" + account.getId(), HttpMethod.PUT,
+                                                                                     updateRequestEntity, AccountIdResponse.class);
         AccountIdResponse response = updateResponse.getBody();
 
         Account updatedAccount = accountRepository.findById(response.getId()).orElseThrow(AccountNotFoundException::new);

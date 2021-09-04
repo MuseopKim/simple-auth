@@ -12,7 +12,6 @@ class UpdatePasswordRequestTest {
     void isInvalidConfirmPasswordTest() {
         // given
         UpdatePasswordRequest request = UpdatePasswordRequestBuilder.newBuilder()
-                                                                .id("UserID")
                                                                 .password("Password")
                                                                 .confirmPassword("DifferentPassword")
                                                                 .build();
