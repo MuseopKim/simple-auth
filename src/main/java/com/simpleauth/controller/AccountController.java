@@ -25,10 +25,10 @@ public class AccountController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping
-    public AccountIdResponse updatePassword(HttpServletRequest httpRequest,
+    @PutMapping("/{accountId}")
+    public AccountIdResponse updatePassword(HttpServletRequest httpRequest, @PathVariable String accountId,
                                             @RequestBody @Valid UpdatePasswordRequest updateRequest) {
-        return accountService.updateBy(httpRequest, updateRequest);
+        return accountService.updateBy(httpRequest, accountId, updateRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)

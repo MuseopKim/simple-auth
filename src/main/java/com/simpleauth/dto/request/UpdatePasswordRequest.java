@@ -11,15 +11,12 @@ import javax.validation.constraints.Size;
 @Getter
 public class UpdatePasswordRequest {
 
-    private String id;
-
     @Size(min = Validation.PASSWORD_SIZE_MIN, max = Validation.PASSWORD_SIZE_MAX, message = Validation.PASSWORD_SIZE_MESSAGE)
     private String password;
 
     private String confirmPassword;
 
-    UpdatePasswordRequest(String id, String password, String confirmPassword) {
-        this.id = id;
+    UpdatePasswordRequest(String password, String confirmPassword) {
         this.password = password;
         this.confirmPassword = confirmPassword;
     }

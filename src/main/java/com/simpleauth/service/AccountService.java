@@ -35,14 +35,14 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountIdResponse updateBy(HttpServletRequest httpRequest, UpdatePasswordRequest updateRequest) {
+    public AccountIdResponse updateBy(HttpServletRequest httpRequest, String accountId, UpdatePasswordRequest updateRequest) {
         if (httpSessionManager.isNotLogin(httpRequest)) {
             throw new LoginRequiredException();
         }
 
         LoginAccount loginAccount = httpSessionManager.getLoginAccount(httpRequest);
 
-        if (loginAccount.isDifferentAccount(updateRequest.getId())) {
+        if (loginAccount.isDifferentAccount(accountId)) {
             throw new AccessDeniedException();
         }
 
